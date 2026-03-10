@@ -28,6 +28,11 @@ module.exports = async function handler(req, res) {
         const session = await stripe.checkout.sessions.create({
             mode: 'subscription',
             payment_method_types: ['card'],
+            payment_method_options: {
+                card: {
+                    request_three_d_secure: 'automatic',
+                },
+            },
             customer_email: customerEmail,
             line_items: [
                 {
