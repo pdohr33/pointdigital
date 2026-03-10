@@ -358,7 +358,7 @@
                         <li>1 content update per month</li>
                         <li>SSL certificate</li>
                     </ul>
-                    <a href="#contact" class="btn btn-outline btn-block">Get Started</a>
+                    <button class="btn btn-outline btn-block checkout-btn" data-price="price_1T9FMC3dlWGhSdtswk4SC4M4" data-plan="Starter - $79/mo">Get Started</button>
                 </div>
                 <!-- Professional -->
                 <div class="pricing-card pricing-card--popular animate-in">
@@ -380,7 +380,7 @@
                         <li>Schema markup for local search</li>
                         <li>Google Maps integration</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary btn-block">Get Started</a>
+                    <button class="btn btn-primary btn-block checkout-btn" data-price="price_1T9FMD3dlWGhSdtsHIinUXXm" data-plan="Professional - $149/mo">Get Started</button>
                 </div>
                 <!-- Premium -->
                 <div class="pricing-card animate-in">
@@ -400,7 +400,7 @@
                         <li>Unlimited content updates</li>
                         <li>Priority support</li>
                     </ul>
-                    <a href="#contact" class="btn btn-outline btn-block">Get Started</a>
+                    <button class="btn btn-outline btn-block checkout-btn" data-price="price_1T9FME3dlWGhSdts0wF8QHWM" data-plan="Premium - $199/mo">Get Started</button>
                 </div>
             </div>
         </div>
@@ -512,6 +512,34 @@
             </div>
         </div>
     </footer>
+
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="modal">
+            <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+            <h3 class="modal-title">Get Started</h3>
+            <p class="modal-plan-label" id="modal-plan-name">Starter - $79/mo</p>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label for="checkout-name" class="modal-label">Your Name</label>
+                    <input type="text" id="checkout-name" class="modal-input" placeholder="Pete Dohr" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkout-email" class="modal-label">Email</label>
+                    <input type="email" id="checkout-email" class="modal-input" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkout-business" class="modal-label">Business Name</label>
+                    <input type="text" id="checkout-business" class="modal-input" placeholder="Your Business Name" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg" id="checkout-submit">Continue to Payment</button>
+                <p class="modal-secure">Secure checkout powered by Stripe</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success/Cancel Toast -->
+    <div class="toast" id="toast"></div>
 
     <script src="script.js"></script>
 </body>
