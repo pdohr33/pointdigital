@@ -210,30 +210,57 @@
 
     if (form) {
         form.addEventListener('submit', function (e) {
-            // Let formsubmit.co handle it if available.
-            // If we want a JS-only fallback, intercept and use mailto.
-            var name = document.getElementById('name').value;
-            var email = document.getElementById('email').value;
-            var phone = document.getElementById('phone').value;
-            var message = document.getElementById('message').value;
+            e.preventDefault();
 
-            // Simple validation
+            var name = document.getElementById('name').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var phone = document.getElementById('phone').value.trim();
+            var message = document.getElementById('message').value.trim();
+            var honey = form.querySelector('[name="_honey"]').value;
+
+            // Honeypot check
+            if (honey) return;
+
             if (!name || !email || !message) {
-                e.preventDefault();
                 alert('Please fill in all required fields.');
                 return;
             }
 
-            // Check for valid email
             var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(email)) {
-                e.preventDefault();
                 alert('Please enter a valid email address.');
                 return;
             }
 
-            // Allow form to submit to formsubmit.co
-            // The form action handles the rest
+            var submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, email: email, phone: phone, message: message }),
+            })
+                .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+                .then(function (result) {
+                    if (result.ok) {
+                        form.reset();
+                        submitBtn.textContent = 'Message Sent!';
+                        setTimeout(function () {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = 'Send Message';
+                        }, 3000);
+                    } else {
+                        alert(result.data.error || 'Something went wrong. Please try again.');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Send Message';
+                    }
+                })
+                .catch(function () {
+                    alert('Connection error. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                });
         });
     }
 })();

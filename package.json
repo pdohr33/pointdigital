@@ -4,6 +4,7 @@
   "description": "Point Digital - Professional web design for local businesses",
   "private": true,
   "dependencies": {
+    "resend": "^4.1.0",
     "stripe": "^20.4.1"
   }
 }
